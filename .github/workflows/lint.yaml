@@ -1,35 +1,40 @@
-name: Lint / CI
+name: CI / Lint / Test
 
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
-    branches: 
+    branches:
       - main
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [lts/*]
 
     steps:
+      # Checkout your repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Run linter
       - name: Run linter
         run: npm run lint
 
+      # Run tests
       - name: Run tests
         run: npm test
