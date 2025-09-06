@@ -27,8 +27,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run Prettier (auto-fix)
+        run: npm run format
+
       - name: Run ESLint
-        run: npx eslint . --ext .js || true
+        run: npm run lint
 
       - name: Run tests
         run: npm test || true
