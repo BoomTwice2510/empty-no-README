@@ -4,10 +4,9 @@
   "description": "A simple JavaScript repository with CI, lint, and test setup",
   "main": "index.js",
   "scripts": {
-  "lint": "eslint . --ext .js",
-  "format": "prettier --write .",
-  "test": "jest --passWithNoTests"
-}
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write .",
+    "test": "jest --passWithNoTests"
   },
   "author": "Your Name",
   "license": "MIT",
