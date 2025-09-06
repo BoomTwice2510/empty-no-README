@@ -1,43 +1,35 @@
-name: Lint
+name: Lint / CI
 
 on:
   push:
-    branches:
+    branches: 
       - main
   pull_request:
-    branches:
+    branches: 
       - main
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [lts/*]
+        node-version: [lts/*]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Setup node env
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
-          cache: yarn
+          node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn install --immutable
-      
-      - name: Run hardhat node, deploy contracts (& generate contracts typescript output)
-        run: yarn chain & yarn deploy
+        run: npm install
 
-      - name: Run hardhat lint
-        run: yarn hardhat:lint --max-warnings=0
+      - name: Run linter
+        run: npm run lint
 
-      - name: Run nextjs lint
-        run: yarn next:lint --max-warnings=0
-
-      - name: Check typings on nextjs
-        run: yarn next:check-types
+      - name: Run tests
+        run: npm test
